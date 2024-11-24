@@ -1,0 +1,63 @@
+/* General Styling */
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+  }
+  
+  .app-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Zip Code Input */
+  .zip-code-input input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  
+  /* Loading and Error */
+  .loading {
+    font-style: italic;
+    color: #666;
+  }
+  
+  .error {
+    color: #d9534f; /* Red color for error messages */
+    margin-top: 10px;
+  }
+  
+  /* Weather Display */
+  .weather-display {
+    margin-top: 20px;
+  }
+  
+  .weather-info {
+    margin-bottom: 15px;
+  }
+  
+  .weather-graphic {
+    /* Style the SVG graphic container */
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+  
+  /* Poem Display */
+  .poem-display {
+    margin-top: 30px;
+  }
+  
+  .poem-text {
+    white-space: pre-line; /* Preserve line breaks in the poem */
+    font-size: 18px;
+    line-height: 1.5;
+  }
