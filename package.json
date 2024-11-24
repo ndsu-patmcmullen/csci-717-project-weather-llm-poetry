@@ -1,0 +1,17 @@
+{
+    "name": "rain-or-shine-llm-poetry",
+    "version": "1.0.0",
+    "description": "Root level package.json",
+    "main": "index.js",
+    "scripts": {
+      "start": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\"",
+      "install": "concurrently \"npm install --prefix frontend\" \"npm install --prefix backend\"",
+      "build": "concurrently \"npm run build --prefix frontend\" \"npm run build --prefix backend\"",
+      "test": "concurrently \"npm run test --prefix frontend\" \"npm run test --prefix backend\""
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "concurrently": "^8.2.0"
+    }
+  }
