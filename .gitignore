@@ -1,0 +1,32 @@
+# Node modules
+node_modules/
+
+# Frontend build output
+frontend/build/
+
+# Backend build output (if applicable)
+backend/dist/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# IDE/editor files
+.idea/
+.vscode/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Test coverage reports
+coverage/
+
+# Other temporary files
+tmp/
+temp/
