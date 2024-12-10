@@ -30,8 +30,8 @@ body {
     font-size: 16px;
     margin-top: 5px;
     transition: background-color 0.3s;
-    min-width: 150px;
-    max-width: 200px;
+    min-width: 215px;
+    max-width: 215px;
     width: 100%;
   }
 
@@ -54,8 +54,18 @@ body {
     text-align: center;
     width: 100%;
     box-sizing: border-box;
-    min-width: 150px;
-    max-width: 200px;
+    min-width: 215px;
+    max-width: 215px;
+  }
+
+  .explanation {
+    width: 330px;
+  }
+
+  .explanation p {
+    white-space: pre-line;
+    font-size: 18px;
+    line-height: 1.5;
   }
   
   /* Loading and Error */
