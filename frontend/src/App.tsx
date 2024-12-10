@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css';
+import SvgLogo from './components/SvgLogo';
 import ZipCodeInput from './components/ZipCodeInput';
 import WeatherDisplay from './components/WeatherDisplay';
 import PoemDisplay from './components/PoemDisplay';
@@ -41,7 +42,9 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>Rain or Shine LLM Poetry</h1>
+      <div className="app-logo">
+        <SvgLogo />
+      </div>
 
       <ZipCodeInput zipCode={zipCode} onZipCodeChange={handleZipCodeChange} />
 
@@ -49,7 +52,6 @@ function App() {
         {isLoading ? 'Loading...' : 'Generate Poem'}
       </button>
 
-      {isLoading && <div className="loading">Loading...</div>}
       {error && <div className="error">{error}</div>}
 
       <WeatherDisplay weather={weatherPoem} />
