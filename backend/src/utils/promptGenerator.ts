@@ -1,8 +1,13 @@
 import { WeatherPoem } from '../types/WeatherPoem';
 
 export class PromptGenerator {
+  /**
+   * Generates a prompt for the Gemini LLM based on the provided weather data.
+   *
+   * @param weatherData The weather data to include in the prompt.
+   * @returns A string representing the generated prompt.
+   */
   generatePrompt(weatherData: WeatherPoem): string {
-    // Get the current date and time
     const now = new Date();
     const month = now.toLocaleString('default', { month: 'long' });
     const timeOfDay = this.getTimeOfDay(now);
