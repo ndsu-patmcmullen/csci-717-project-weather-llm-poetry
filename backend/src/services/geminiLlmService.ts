@@ -5,14 +5,17 @@ dotenv.config();
 export class GeminiLlmService {
   private apiClient: GoogleGenerativeAI;
 
-  constructor() {
-    if (!process.env.GEMINI_API_KEY) {
-      throw new Error('Missing GEMINI_API_KEY environment variable');
-    }
-
-    this.apiClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  constructor(apiClient: GoogleGenerativeAI) {
+    this.apiClient = apiClient;
   }
 
+  /**
+   * Generates a poem using the Gemini LLM based on the provided prompt.
+   *
+   * @param prompt The prompt to use for poem generation.
+   * @returns A Promise that resolves to the generated poem as a string.
+   * @throws An error if the API request fails.
+   */
   async generatePoem(prompt: string): Promise<string> {
     try {
       const model: GenerativeModel = this.apiClient.getGenerativeModel({

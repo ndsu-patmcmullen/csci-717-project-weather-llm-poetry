@@ -4,7 +4,7 @@ import cors from 'cors';
 import weatherAndPoemRoutes from './routes/weatherAndPoem';
 
 const app = express();
-const port = process.env.PORT || 3001; // Use the PORT environment variable or default to 3001
+const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors()); // Enable CORS for all origins

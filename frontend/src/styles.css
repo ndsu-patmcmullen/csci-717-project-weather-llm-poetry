@@ -5,23 +5,67 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #f5f5f5; /* Light background color */
   }
   
   .app-container {
     background-color: #fff;
     padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+      0px 1px 10px 0px rgba(0, 0, 0, 0.12); /* Material Design shadow */
     text-align: center;
+    min-width: 300px;
+    max-width: 600px; 
+  }
+
+  .app-container button {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+    min-width: 215px;
+    max-width: 215px;
+    width: 100%;
+  }
+
+  .app-container button:hover {
+    background-color: #1976d2;
+  }
+  
+  .app-container button:disabled {
+    background-color: #bbdefb;
+    color: #666;
+    cursor: default;
   }
   
   /* Zip Code Input */
   .zip-code-input input {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 4px;
     font-size: 16px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 215px;
+    max-width: 215px;
+  }
+
+  .explanation {
+    width: 330px;
+  }
+
+  .explanation p {
+    white-space: pre-line;
+    font-size: 18px;
+    line-height: 1.5;
   }
   
   /* Loading and Error */
@@ -37,7 +81,7 @@ body {
   
   /* Weather Display */
   .weather-display {
-    margin-top: 20px;
+    margin-top: 30px;
   }
   
   .weather-info {
@@ -47,7 +91,7 @@ body {
   .weather-graphic {
     /* Style the SVG graphic container */
     width: 150px;
-    height: 150px;
+    height: auto;
     margin: 0 auto;
   }
   

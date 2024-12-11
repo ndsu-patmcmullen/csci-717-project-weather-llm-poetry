@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles.css';
+import SvgLogo from './components/SvgLogo';
 import ZipCodeInput from './components/ZipCodeInput';
 import WeatherDisplay from './components/WeatherDisplay';
 import PoemDisplay from './components/PoemDisplay';
@@ -10,6 +11,7 @@ function App() {
   const [weatherPoem, setWeatherPoem] = useState<WeatherPoem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showExplanation, setShowExplanation] = useState(true);
 
   const fetchData = async () => {
     if (zipCode) {
@@ -36,20 +38,31 @@ function App() {
   };
 
   const handleSubmit = () => {
+    setShowExplanation(false);
     fetchData(); // Call the fetchData function when the button is clicked
   };
 
   return (
     <div className="app-container">
-      <h1>Rain or Shine LLM Poetry</h1>
+      <div className="app-logo">
+        <SvgLogo />
+      </div>
 
       <ZipCodeInput zipCode={zipCode} onZipCodeChange={handleZipCodeChange} />
 
       <button onClick={handleSubmit} disabled={!zipCode || isLoading}>
-        {isLoading ? 'Loading...' : 'Generate Poem'}
+        {isLoading ? 'Loading...' : 'Get Your Weather Poem'}
       </button>
+      {showExplanation && (
+        <div className="explanation">
+          <p>Get a poem just for you based on the weather where you live.</p>
+          <p>
+            It&apos;s like magic, but it&apos;s actually really cool technology!
+            ✨
+          </p>
+        </div>
+      )}
 
-      {isLoading && <div className="loading">Loading...</div>}
       {error && <div className="error">{error}</div>}
 
       <WeatherDisplay weather={weatherPoem} />

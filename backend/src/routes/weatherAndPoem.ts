@@ -1,16 +1,37 @@
 import { WeatherPoem } from '../types/WeatherPoem';
 import { Router, Request, Response } from 'express';
 import { GeminiLlmService } from '../services/geminiLlmService';
-import { WeatherService } from '../services/weatherService'; // Import WeatherService
-import { PromptGenerator } from '../utils/promptGenerator'; // Import PromptGenerator
+import { WeatherService } from '../services/weatherService';
+import { PromptGenerator } from '../utils/promptGenerator';
 import { Cache } from '../cache';
+import { GeocodingService } from '../services/geocodingService';
+import dotenv from 'dotenv';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+dotenv.config();
+
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error('Missing GEMINI_API_KEY environment variable');
+}
 
 const router: Router = Router();
-const geminiLlmService = new GeminiLlmService();
-const weatherService = new WeatherService(); // Initialize WeatherService
-const promptGenerator = new PromptGenerator(); // Initialize PromptGenerator
+const geminiLlmService = new GeminiLlmService(
+  new GoogleGenerativeAI(process.env.GEMINI_API_KEY),
+);
+const geocodingService = new GeocodingService();
+const weatherService = new WeatherService(geocodingService);
+const promptGenerator = new PromptGenerator();
 const cache = new Cache();
 
+/**
+ * GET /weather-and-poem/:zipCode
+ *
+ * Fetches weather data and an AI-generated poem for the given zip code.
+ *
+ * @param zipCode The zip code to fetch data for. Must be a 5-digit number.
+ * @returns A JSON response containing the weather and poem data.
+ *          If successful: { temperature: number, condition: string, imageUrl: string, cityTown: string, poem: string }
+ *          If error: { error: string }
+ */
 router.get(
   '/weather-and-poem/:zipCode',
   async (req: Request, res: Response): Promise<void> => {
@@ -25,7 +46,7 @@ router.get(
         return;
       }
 
-      const cacheKey = `weather-poem-${zipCode}`; // Include "weather" in the cache key
+      const cacheKey = `weather-poem-${zipCode}`;
 
       // Check if the data is already in the cache
       const cachedData = cache.get(cacheKey);
