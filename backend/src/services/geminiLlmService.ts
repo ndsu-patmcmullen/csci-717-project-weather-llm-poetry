@@ -19,7 +19,7 @@ export class GeminiLlmService {
   async generatePoem(prompt: string): Promise<string> {
     try {
       const model: GenerativeModel = this.apiClient.getGenerativeModel({
-        model: 'gemini-1.5-flash',
+        model: 'gemini-3.5-flash',
       });
 
       const result = await model.generateContent(prompt);
