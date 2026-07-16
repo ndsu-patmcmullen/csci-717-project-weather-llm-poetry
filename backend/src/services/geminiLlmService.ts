@@ -1,8 +1,9 @@
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
+import { LlmService } from './llmService';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export class GeminiLlmService {
+export class GeminiLlmService implements LlmService {
   private apiClient: GoogleGenerativeAI;
 
   constructor(apiClient: GoogleGenerativeAI) {
@@ -23,12 +24,11 @@ export class GeminiLlmService {
       });
 
       const result = await model.generateContent(prompt);
-      console.log(result);
       const poem: string = result.response.text();
 
       return poem;
     } catch (error) {
-      console.error('Error generating poem:', error);
+      console.error('Error generating poem in Gemini:', error);
       throw error;
     }
   }

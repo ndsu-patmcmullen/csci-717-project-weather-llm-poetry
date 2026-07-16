@@ -1,89 +1,116 @@
 # Rain or Shine LLM Poetry
 
-This application provides users with an AI-generated poem based on the current weather in their location.
+This application provides users with an AI-generated, kid-friendly poem based on the current weather in their location.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm (or yarn) installed.
+* **Node.js** and npm (or yarn) installed.
+* **LM Studio** (Optional, only required if you want to run the AI completely offline and locally).
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
+```bash
+git clone https://github.com/ndsu-patmcmullen/csci-717-project-weather-llm-poetry.git
 
-   ```bash
-   git clone [invalid URL removed]
-   ```
+```
 
-2. Install dependencies:
-   ```bash
-   cd rain-or-shine-llm-poetry
-   npm install
-   ```
+2. **Install dependencies:**
+```bash
+cd rain-or-shine-llm-poetry
+npm install
 
-### Configuration
+```
 
-1.  **Set up environment variables:**
+## Configuration
 
-    - Create a `.env` file in the `backend` directory.
+The backend supports both cloud-hosted generation via Google Gemini and fully local generation via LM Studio.
 
-    - Add your Gemini API key to the `.env` file:
+1. Create a `.env` file inside the `backend` directory.
+2. Define your desired LLM configuration using the environment variables below:
 
-      ```
-      GEMINI_API_KEY=your_gemini_api_key
-      ```
+| Variable | Default Value | Description |
+| --- | --- | --- |
+| `GEMINI_API_KEY` | *None* | Required to run cloud-hosted AI. Get an API key at [Google AI Studio](https://aistudio.google.com/apikey). |
+| `LOCAL_LLM_URL` | `http://localhost:1234` | The endpoint of your running LM Studio instance. Fallback port is `1234`. |
 
-    - You can get a free API key for the `gemini-1.5-flash` model at [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+## Running Offline with LM Studio (Local LLM)
 
-    - Refer to the Gemini API documentation for more information: [https://ai.google.dev/gemini-api/docs\#node.js](https://ai.google.dev/gemini-api/docs#node.js).
+To run the application's AI offline without sending data to external APIs, follow these steps to spin up a local server:
 
-### Running the Application
+1. **Download and Install:**
+Download the desktop application from [lmstudio.ai](https://lmstudio.ai).
+2. **Download a Model:**
+* Open LM Studio.
+* Click on the **Search (Magnifying Glass)** icon in the left sidebar.
+* Search for a lightweight model (e.g., `google/gemma-2b` or `qwen2.5-1.5b`).
+* Download a quantized version (like `Q4_K_M` or `Q6_K`) that fits comfortably within your machine's RAM.
 
-1.  Start the backend server:
-    ```bash
-    cd backend
-    npm run start
-    ```
-2.  Start the frontend development server:
-    ```bash
-    cd frontend
-    npm run start
-    ```
+3. **Start the Server:**
+* Go to the **Local Server (Double-headed Arrow/Server Rack)** tab on the left.
+* Select your downloaded model from the dropdown list at the top to load it into memory.
+* Click the green **Start Server** button.
+* The server will now listen on `http://localhost:1234` by default.
+
+## Running the Application
+
+1. **Start the backend server:**
+```bash
+cd backend
+npm run start
+
+```
+
+
+2. **Start the frontend development server:**
+```bash
+cd frontend
+npm run start
+
+```
 
 ## Testing
 
-- To run the tests, execute the following command in the respective directories:
+To run the test suites (including coverage tests for the service clients), execute the following commands in their respective directories:
 
-  ```bash
-  cd frontend
-  npm run test
-  ```
+### Frontend Tests
 
-  ```bash
-  cd backend
-  npm run test
-  ```
+```bash
+cd frontend
+npm run test
+
+```
+
+### Backend Tests
+
+```bash
+cd backend
+npm run test
+
+```
 
 ## Formatting and Linting
 
-- To format the code using Prettier, run:
+* **To format the code using Prettier:**
+```bash
+npm run format
 
-  ```bash
-  npm run format
-  ```
+```
 
-- To lint the code using ESLint, run:
 
-  ```bash
-  npm run lint
-  ```
+* **To lint the code using ESLint:**
+```bash
+npm run lint
+
+```
 
 ## API Documentation
 
-- **Geocoding API:** [https://open-meteo.com/en/docs/geocoding-api\#name=12590](https://open-meteo.com/en/docs/geocoding-api#name=12590)
-- **Weather API:** [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs)
+* **Geocoding API:** [Open-Meteo Geocoding Documentation](https://open-meteo.com/en/docs/geocoding-api)
+* **Weather API:** [Open-Meteo Weather Forecast Documentation](https://open-meteo.com/en/docs)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/url?sa=E&source=gmail&q=LICENSE) file for details.
+This project is licensed under the MIT License - see the `LICENSE` file for details.
