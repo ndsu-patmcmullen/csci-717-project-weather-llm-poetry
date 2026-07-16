@@ -1,6 +1,8 @@
 import { WeatherPoem } from '../types/WeatherPoem';
 import { Router, Request, Response } from 'express';
+import { LlmService } from '../services/llmService';
 import { GeminiLlmService } from '../services/geminiLlmService';
+import { LocalLlmService } from '../services/localLlmService';
 import { WeatherService } from '../services/weatherService';
 import { PromptGenerator } from '../utils/promptGenerator';
 import { Cache } from '../cache';
@@ -9,14 +11,25 @@ import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 dotenv.config();
 
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error('Missing GEMINI_API_KEY environment variable');
+const router: Router = Router();
+
+const useLocal = process.env.USE_LOCAL_LLM === 'true';
+let llmService: LlmService;
+
+if (useLocal) {
+  llmService = new LocalLlmService();
+  console.log('LLM Service initialized: LOCAL (LM Studio)');
+} else {
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('Missing GEMINI_API_KEY environment variable');
+  }
+
+  llmService = new GeminiLlmService(
+    new GoogleGenerativeAI(process.env.GEMINI_API_KEY),
+  );
+  console.log('LLM Service initialized: GEMINI');
 }
 
-const router: Router = Router();
-const geminiLlmService = new GeminiLlmService(
-  new GoogleGenerativeAI(process.env.GEMINI_API_KEY),
-);
 const geocodingService = new GeocodingService();
 const weatherService = new WeatherService(geocodingService);
 const promptGenerator = new PromptGenerator();
@@ -46,9 +59,10 @@ router.get(
         return;
       }
 
-      const cacheKey = `weather-poem-${zipCode}`;
+      const providerKey = useLocal ? 'local' : 'gemini';
+      const cacheKey = `weather-poem-${providerKey}-${zipCode}`;
 
-      // Check if the data is already in the cache
+      // Check cache
       const cachedData = cache.get(cacheKey);
       if (cachedData) {
         res.json(cachedData);
@@ -61,8 +75,7 @@ router.get(
       // Generate the prompt using the fetched weather data
       const prompt = promptGenerator.generatePrompt(weatherData);
 
-      // Generate the poem using the Gemini LLM
-      const poem = await geminiLlmService.generatePoem(prompt);
+      const poem = await llmService.generatePoem(prompt);
 
       // Combine weather and poem data
       const weatherPoem: WeatherPoem = {
@@ -73,7 +86,6 @@ router.get(
         poem: poem,
       };
 
-      // Store the combined data in the cache
       cache.set(cacheKey, weatherPoem);
 
       res.json(weatherPoem);
